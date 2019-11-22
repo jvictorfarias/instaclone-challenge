@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/data/pg-db
+    container_name: pg-instaclone
+    networks:
+      - app_net
+
+  mongo:
+    image: mongo
+    environment:
+      MONGODB_USER: mongo
+      MONGODB_PASS: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data:/mongo-db
+    container_name: mongodb-instaclone
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
