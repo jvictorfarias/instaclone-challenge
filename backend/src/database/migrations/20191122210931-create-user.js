@@ -21,7 +21,7 @@ module.exports = {
         allowNull: false,
       },
       avatar_id: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references: {
           model: 'avatars',
           key: 'id',
