@@ -18,7 +18,7 @@ export default function Feed({ user }) {
       setPosts(response.data);
     }
     loadPosts();
-  });
+  }, [posts._id]);
 
   return (
     <div>

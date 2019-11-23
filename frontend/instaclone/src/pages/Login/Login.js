@@ -22,10 +22,7 @@ export default function Login({ history }) {
     api
       .post('login', { email, password })
       .then(response => {
-        history.push({
-          pathname: '/feed',
-          state: { user: response.data },
-        });
+        history.push(`/feed/${response.data.id}`);
       })
       .catch(err => {
         if (err.response.status === 403) {

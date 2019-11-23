@@ -11,7 +11,7 @@ function Routes() {
     <Switch>
       <Route path="/" exact component={Login} />
       <Route path="/registration" component={Registration} />
-      <Route path="/feed" component={Feed} />
+      <Route path="/feed/:id" component={Feed} />
       <Route path="/post" component={Post} />
     </Switch>
   );

@@ -1,10 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import "./Header.css";
+import './Header.css';
 
-import Logo from "../assets/logo.svg";
-import Camera from "../assets/camera.svg";
+import Logout from '../assets/logout.svg';
+import Logo from '../assets/logo.svg';
+import Camera from '../assets/camera.svg';
 
 export default function Header() {
   return (
