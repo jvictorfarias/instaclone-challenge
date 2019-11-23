@@ -53,7 +53,7 @@ class UserController {
     }
 
     if (!(await user.checkPassword(req.body.password))) {
-      return res.status(400).json({ error: 'Password invalid ' });
+      return res.status(401).json({ error: 'Password invalid ' });
     }
 
     return res.status(200).json(user);

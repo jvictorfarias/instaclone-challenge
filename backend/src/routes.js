@@ -10,7 +10,7 @@ const upload = multer(multerConfig);
 
 // Users
 routes.post('/users', UserController.store);
-routes.get('/users', UserController.show);
+routes.post('/login', UserController.show);
 
 // Avatar
 routes.post('/avatars', upload.single('file'), AvatarController.store);

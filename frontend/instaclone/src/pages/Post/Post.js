@@ -1,17 +1,17 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import api from "../../services/api";
+import api from '../../services/api';
 
-import "./Post.css";
-import Header from "../../components/Header";
+import './Post.css';
+import Header from '../../components/Header';
 
 class Post extends Component {
   state = {
     image: null,
-    author: "",
-    place: "",
-    description: "",
-    hashtags: ""
+    author: '',
+    place: '',
+    description: '',
+    hashtags: '',
   };
 
   handleSubmit = async e => {
@@ -19,15 +19,15 @@ class Post extends Component {
 
     const data = new FormData();
 
-    data.append("author", this.state.author);
-    data.append("place", this.state.place);
-    data.append("description", this.state.description);
-    data.append("hashtags", this.state.hashtags);
-    data.append("image", this.state.image);
+    data.append('author', this.state.author);
+    data.append('place', this.state.place);
+    data.append('description', this.state.description);
+    data.append('hashtags', this.state.hashtags);
+    data.append('image', this.state.image);
 
-    await api.post("posts", data);
+    await api.post('posts', data);
 
-    this.props.history.push("/feed");
+    this.props.history.push('/feed');
   };
 
   handleImageChange = e => {

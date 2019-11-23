@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import api from "../../services/api";
+import React, { Component } from 'react';
+import api from '../../services/api';
 
-import "./Feed.css";
+import './Feed.css';
 
-import more from "../../assets/more.svg";
-import Like from "../../assets/like.svg";
-import Comment from "../../assets/comment.svg";
-import Send from "../../assets/send.svg";
-import Header from "../../components/Header";
+import more from '../../assets/more.svg';
+import Like from '../../assets/like.svg';
+import Comment from '../../assets/comment.svg';
+import Send from '../../assets/send.svg';
+import Header from '../../components/Header';
 
 class Feed extends Component {
   state = {
-    feed: []
+    feed: [],
   };
 
   async componentDidMount() {
-    const response = await api.get("posts");
+    const response = await api.get('posts');
     this.setState({ feed: response.data });
   }
 
@@ -31,7 +31,7 @@ class Feed extends Component {
         <Header />
 
         <section id="post-list">
-          {" "}
+          {' '}
           {this.state.feed.map(post => (
             // Adicionar chave única no primeiro elemento
             <article key={post._id}>
