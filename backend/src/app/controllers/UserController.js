@@ -21,7 +21,7 @@ class UserController {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    const { id, name, email } = await User.create(req.body); // Geralmente os dados vem no body
+    const { id, name, email } = await User.create(req.body);
     return res.json({
       id,
       name,
@@ -30,6 +30,18 @@ class UserController {
   }
 
   async show(req, res) {
+    const schema = Yup.object().shape({
+      email: Yup.string()
+        .email()
+        .required(),
+      password: Yup.string()
+        .min(8)
+        .required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(403).json({ error: 'bad request' });
+    }
     const user = await User.findOne({
       where: {
         email: req.body.email,
