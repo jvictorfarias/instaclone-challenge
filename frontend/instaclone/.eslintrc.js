@@ -20,5 +20,6 @@ module.exports = {
     'eslint-disable-next-line react/jsx-filename-extension': 'off',
     'react/jsx-filename-extension': 'off',
     'arrow-parens': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

@@ -1,4 +1,4 @@
-.login-container {
+.registration-container {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -6,7 +6,7 @@
   margin-top: 100px;
 }
 
-.login-container form {
+.registration-container form {
   width: 100%;
   max-width: 300px;
   display: flex;
@@ -14,7 +14,7 @@
   align-content: center;
 }
 
-.login-container form input {
+.registration-container form input {
   margin-top: 5px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -24,11 +24,11 @@
   color: #666;
 }
 
-.login-container form input::placeholder {
+.registration-container form input::placeholder {
   color: #999;
 }
 
-.login-container form button {
+.registration-container form button {
   margin-top: 10px;
   border: 0;
   border-radius: 4px;
@@ -39,8 +39,7 @@
   color: #fff;
   cursor: pointer;
 }
-
-.login-container form img {
+.registration-container form img {
   margin-bottom: 50px;
   border-radius: 0%;
 }
