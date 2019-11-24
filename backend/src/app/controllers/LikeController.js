@@ -8,6 +8,7 @@ class LikeController {
 
     await post.save();
 
+    req.io.emit('like', post);
     return res.status(200).json(post);
   }
 }

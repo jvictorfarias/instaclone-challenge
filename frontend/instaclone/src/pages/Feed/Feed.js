@@ -10,7 +10,7 @@ import Comment from '../../assets/comment.svg';
 import Send from '../../assets/send.svg';
 import Header from '../../components/Header';
 
-export default function Feed() {
+export default function Feed({ history, match, location }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -28,12 +28,10 @@ export default function Feed() {
       setPosts([newPost, ...posts]);
     });
 
-    socket.on('like', newLike => {
-      setPosts([
-        posts.map(post => (post._id === newLike._id ? newLike : post)),
-      ]);
+    socket.on('like', newPostLike => {
+      setPosts([newPostLike, ...posts]);
     });
-  }, [posts._id]);
+  });
 
   async function handleLike(e) {
     api.post(`/posts/${e}/like`);
@@ -57,7 +55,7 @@ export default function Feed() {
             <img src={`${config.url}/files/${post.image}`} alt="nothing" />
             <footer>
               <div className="actions">
-                <button type="button">
+                <button type="button" onClick={() => handleLike(post._id)}>
                   <img src={Like} alt="like" />
                 </button>
                 <button type="button">

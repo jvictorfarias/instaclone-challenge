@@ -56,7 +56,12 @@ class UserController {
       return res.status(401).json({ error: 'Password invalid ' });
     }
 
-    return res.status(200).json(user);
+    const { id, name, email } = user;
+    return res.status(200).json({
+      id,
+      name,
+      email,
+    });
   }
 
   async index(req, res) {

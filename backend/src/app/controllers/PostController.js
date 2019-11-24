@@ -19,6 +19,8 @@ class PostController {
       image,
     });
 
+    req.io.emit('post', post);
+
     return res.status(200).json(post);
   }
 }
