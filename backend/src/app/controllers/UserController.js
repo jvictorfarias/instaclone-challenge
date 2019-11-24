@@ -14,11 +14,11 @@ class UserController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Data not valid' });
+      return res.status(403).json({ error: 'Data not valid' });
     }
 
     if (await User.findOne({ where: { email: req.body.email } })) {
-      return res.status(400).json({ error: 'User already exists' });
+      return res.status(401).json({ error: 'User already exists' });
     }
 
     const { id, name, email } = await User.create(req.body);
@@ -57,6 +57,15 @@ class UserController {
     }
 
     return res.status(200).json(user);
+  }
+
+  async index(req, res) {
+    const { name, email } = await User.findByPk(req.params.id);
+
+    return res.status(200).json({
+      name,
+      email,
+    });
   }
 }
 
