@@ -9,7 +9,7 @@ import Comment from '../../assets/comment.svg';
 import Send from '../../assets/send.svg';
 import Header from '../../components/Header';
 
-export default function Feed({ user }) {
+export default function Feed() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -56,6 +56,21 @@ export default function Feed({ user }) {
                 {post.description}
                 <span>{post.hashtags}</span>
               </p>
+            </footer>
+            <footer>
+              <section id="comment">
+                <div>
+                  <form>
+                    <textarea
+                      aria-label="Adicione um comentário..."
+                      placeholder="Adicione um comentário..."
+                      autoComplete="off"
+                      autoCorrect="off"
+                    />
+                    <button type="submit">Publicar</button>
+                  </form>
+                </div>
+              </section>
             </footer>
           </article>
         ))}

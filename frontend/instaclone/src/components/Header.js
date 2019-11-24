@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import './Header.css';
 
-import Logout from '../assets/logout.svg';
 import Logo from '../assets/logo.svg';
 import Camera from '../assets/camera.svg';
 

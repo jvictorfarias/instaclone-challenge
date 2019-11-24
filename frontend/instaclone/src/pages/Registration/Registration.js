@@ -18,8 +18,7 @@ export default function Registration({ history }) {
     api
       .post('registration', { name, email, password })
       .then(response => {
-        const user = response.data;
-        history.push('/feed');
+        history.push(`/feed/${response.data.id}`);
       })
       .catch(err => {
         if (err.response.status === 403) {

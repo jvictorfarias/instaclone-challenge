@@ -21,5 +21,6 @@ module.exports = {
     'react/jsx-filename-extension': 'off',
     'arrow-parens': 'off',
     'no-underscore-dangle': 'off',
+    'react/prop-types': 'off',
   },
 };

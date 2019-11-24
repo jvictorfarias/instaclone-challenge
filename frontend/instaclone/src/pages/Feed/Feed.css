@@ -66,3 +66,114 @@ section#post-list article footer p span {
   color: cornflowerblue;
   display: block;
 }
+
+section#comment {
+  font: inherit;
+  vertical-align: baseline;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  border: 0 solid #000;
+  box-sizing: border-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  border-right-color: rgb(102, 102, 102);
+  border-bottom-color: rgb(102, 102, 102);
+  border-left-color: rgb(102, 102, 102);
+  margin-top: 4px;
+  border-top: 1px solid #efefef;
+  flex-shrink: 0;
+  font-size: 14px;
+  line-height: 18px;
+  min-height: 56px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  border-top-color: rgb(54, 54, 54);
+  color: rgb(186, 181, 171);
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+section#comment form {
+  color: rgb(186, 181, 171);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  border-top-color: initial;
+  border-right-color: initial;
+  border-bottom-color: initial;
+  border-left-color: initial;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  display: flex;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  flex-direction: row;
+  flex-shrink: 1;
+  position: relative;
+}
+
+section#comment button {
+  -webkit-box-direction: normal;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  -webkit-appearance: none;
+  background: 0 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+  text-transform: inherit;
+  text-overflow: ellipsis;
+  user-select: none;
+  width: auto;
+  border: 0;
+  display: inline;
+  padding: 0;
+  position: relative;
+  background-image: initial;
+  background-color: initial;
+  border-top-color: initial;
+  border-right-color: initial;
+  border-bottom-color: initial;
+  border-left-color: initial;
+  color: cornflowerblue;
+  pointer-events: none;
+}
+
+section#comment textarea {
+  -webkit-box-direction: normal;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  line-height: 18px;
+  overflow: hidden;
+  display: flex;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  background: 0 0;
+  border: 0;
+  font-size: inherit;
+  max-height: 80px;
+  outline: 0;
+  padding: 0;
+  resize: none;
+  background-image: initial;
+  background-color: initial;
+  border-top-color: initial;
+  border-right-color: initial;
+  border-bottom-color: initial;
+  border-left-color: initial;
+  color: #000;
+  outline-color: initial;
+  height: 17px;
+}

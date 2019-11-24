@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { store } from 'react-notifications-component';
-import { Link } from 'react-router-dom';
 import 'react-notifications-component/dist/theme.css';
 import api from '../../services/api';
 import 'animate.css';
@@ -21,8 +20,11 @@ export default function Login({ history }) {
 
     api
       .post('login', { email, password })
-      .then(response => {
-        history.push(`/feed/${response.data.id}`);
+      .then(async response => {
+        await history.push({
+          pathname: '/feed',
+          data: response.data,
+        });
       })
       .catch(err => {
         if (err.response.status === 403) {
