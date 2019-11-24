@@ -2,6 +2,8 @@ header#main-header {
   background: #fff;
   height: 70px;
   border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
 }
 
 header#main-header .header-content {

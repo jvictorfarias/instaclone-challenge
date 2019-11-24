@@ -6,6 +6,7 @@ import AvatarController from './app/controllers/AvatarController';
 import PostController from './app/controllers/PostController';
 
 const routes = new Router();
+
 const upload = multer(multerConfig);
 
 // Users

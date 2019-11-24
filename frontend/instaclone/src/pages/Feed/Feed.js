@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
+import config from '../../config/config';
 import api from '../../services/api';
-
 import './Feed.css';
 
 import more from '../../assets/more.svg';
@@ -20,6 +21,24 @@ export default function Feed() {
     loadPosts();
   }, [posts._id]);
 
+  useEffect(() => {
+    const socket = io(config.url);
+
+    socket.on('post', newPost => {
+      setPosts([newPost, ...posts]);
+    });
+
+    socket.on('like', newLike => {
+      setPosts([
+        posts.map(post => (post._id === newLike._id ? newLike : post)),
+      ]);
+    });
+  }, [posts._id]);
+
+  async function handleLike(e) {
+    api.post(`/posts/${e}/like`);
+  }
+
   return (
     <div>
       <Header />
@@ -35,10 +54,7 @@ export default function Feed() {
               </div>
               <img src={more} alt="Mais" />
             </header>
-            <img
-              src={`http://localhost:3333/files/${post.image}`}
-              alt="nothing"
-            />
+            <img src={`${config.url}/files/${post.image}`} alt="nothing" />
             <footer>
               <div className="actions">
                 <button type="button">
