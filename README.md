@@ -46,6 +46,8 @@ http://localhost:3000/feed
 
 ![likes](https://github.com/jvictorfarias/instaclone-challenge/blob/master/img/likesEComments.png)
 
+![exclusao](https://github.com/jvictorfarias/instaclone-challenge/blob/master/img/exclusao.png)
+
 ### Post
 
 Área de criação de post, onde ocorre a verificação de campos preenchidos, além do formato de imagem.
