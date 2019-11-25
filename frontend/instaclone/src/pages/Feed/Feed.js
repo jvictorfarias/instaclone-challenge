@@ -50,9 +50,7 @@ export default function Feed() {
   async function pushComment() {
     socket.on('comment', newCommentPost => {
       setPosts(
-        posts.map(post =>
-          post._id === newCommentPost._id ? newCommentPost : post
-        )
+        posts.map(post => (post._id === newCommentPost._id ? newCommentPost : post),),
       );
     });
   }
@@ -63,7 +61,7 @@ export default function Feed() {
   async function pushLike() {
     socket.on('like', newLikedPost => {
       setPosts(
-        posts.map(post => (post._id === newLikedPost._id ? newLikedPost : post))
+        posts.map(post => (post._id === newLikedPost._id ? newLikedPost : post)),
       );
     });
   }
