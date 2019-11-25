@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "sucrase-node src/server.js",
-    "generate-docs": "jsdoc -r  . -d docs -c jsdoc.json README.md"
+    "generate-docs": "jsdoc -r  ./src -d docs -c jsdoc.json README.md"
   },
   "devDependencies": {
     "eslint": "^6.7.0",

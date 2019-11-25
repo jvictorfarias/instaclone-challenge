@@ -6,17 +6,26 @@ import User from '../app/models/User';
 
 const models = [User];
 
+/**
+ * Classe de inicialização dos bancos de dados
+ */
 class Database {
   constructor() {
     this.init();
     this.mongo();
   }
 
+  /**
+   * Inicia a conexão com o PostgreSQL, além de incializar os Models
+   */
   init() {
     this.connection = new Sequelize(databaseConfig);
     models.map(model => model.init(this.connection));
   }
 
+  /**
+   * Conexão com o MongoDB
+   */
   mongo() {
     this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,

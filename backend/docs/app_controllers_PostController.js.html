@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      UserController.js - Documentation
+      app/controllers/PostController.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -75,13 +75,13 @@
 
     
 
-    
+    <h3>Classes</h3><ul><li id="Avatar-nav"><a href="Avatar.html">Avatar</a></li><li id="Database-nav"><a href="Database.html">Database</a><ul class='methods'><li data-type="method" id="Database-init-nav"><a href="Database.html#init">init</a></li><li data-type="method" id="Database-init-nav"><a href="Database.html#init">init</a></li><li data-type="method" id="Database-mongo-nav"><a href="Database.html#mongo">mongo</a></li><li data-type="method" id="Database-mongo-nav"><a href="Database.html#mongo">mongo</a></li></ul></li><li id="User-nav"><a href="User.html">User</a><ul class='methods'><li data-type="method" id="User-init-nav"><a href="User.html#.init">init</a></li><li data-type="method" id="User-init-nav"><a href="User.html#.init">init</a></li><li data-type="method" id="User-checkPassword-nav"><a href="User.html#checkPassword">checkPassword</a></li><li data-type="method" id="User-checkPassword-nav"><a href="User.html#checkPassword">checkPassword</a></li></ul></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#PostSchema">PostSchema</a></li><li><a href="global.html#server">server</a></li></ul>
   </nav>
 
   <div id="main">
     
       <h1 class="page-title">
-        UserController.js
+        app/controllers/PostController.js
       </h1>
     
 
@@ -91,117 +91,103 @@
 <section>
   <article>
     <pre class="prettyprint source linenums"><code>import * as Yup from 'yup';
-import User from '../models/User';
+import Post from '../schemas/Post';
 
-class UserController {
+class PostController {
   /**
-   * Function that creates a User.
+   * Function that return a list of Posts.
    *
    * @param {req} n Request param
    * @param {res} n Response params
-   * @return {User} ID of the deleted post, emiting to the frontend socket
+   * @return {Post} HTTP Status with an array of posts
    *
    * @example
    *
-   *     store(req.body.user, res)
+   *     index(req, res)
    */
+  async index(req, res) {
+    const posts = await Post.find().sort('-createdAt');
 
+    return res.status(200).json(posts);
+  }
+
+  /**
+   * Function that return a list of Posts.
+   *
+   * @param {req} n Request param
+   * @param {res} n Response params
+   * @return {Post} HTTP Status with the created post, also emiting to the socket
+   *
+   * @example
+   *
+   *     store(req.postData, res)
+   */
   async store(req, res) {
     /**
-     * Validação do objeto User
+     * Verifica se o objeto enviado ao backend é válido
      */
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      email: Yup.string()
-        .email()
-        .required(),
-      password: Yup.string()
-        .min(8)
-        .required(),
+      author: Yup.string().required(),
+      place: Yup.string().required(),
+      description: Yup.string().required(),
+      hashtags: Yup.string().required(),
     });
 
     /**
-     * Caso seja inválido, retorna status de erro
+     * Caso não seja, retorna erro de validação de dados
      */
+    if (!(await schema.isValid(req.body)) || !req.file) {
+      return res.status(400).json({ error: 'Data validation failed' });
+    }
+    const { author, place, description, hashtags } = req.body;
+    const { filename: image, mimetype: type } = req.file;
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(403).json({ error: 'Data not valid' });
+    /**
+     * Verifica se o tipo da imagem é válido
+     */
+    if (type !== 'image/jpeg' &amp;&amp; type !== 'image/png') {
+      return res.status(403).json({ error: 'Image validation failed' });
     }
 
     /**
-     * Verifica se já existe algum usuário com esse email
+     * Cria o post e emite para o socket no frontend
      */
-
-    if (await User.findOne({ where: { email: req.body.email } })) {
-      return res.status(401).json({ error: 'User already exists' });
-    }
-
-    /**
-     * Cria o usuário
-     */
-    const { id, name, email } = await User.create(req.body);
-    return res.json({
-      id,
-      name,
-      email,
+    const post = await Post.create({
+      author,
+      place,
+      description,
+      hashtags,
+      image,
     });
+
+    req.io.emit('post', post);
+
+    return res.status(200).json(post);
   }
+
   /**
-   * Function that list a specific authenticated user.
+   * Function that return a list of Posts.
    *
    * @param {req} n Request param
    * @param {res} n Response params
-   * @return {User} Return the authenticated
+   * @return {Number} ID of the deleted post, emiting to the frontend socket
    *
    * @example
    *
-   *     show(req.userID, res)
+   *     delete(req.postID, res)
    */
 
-  async show(req, res) {
-    /**
-     * Verifica se o objeto para validação está correto
-     */
-    const schema = Yup.object().shape({
-      email: Yup.string()
-        .email()
-        .required(),
-      password: Yup.string()
-        .min(8)
-        .required(),
-    });
+  async delete(req, res) {
+    await Post.findByIdAndRemove(req.headers.id);
 
     /**
-     * Caso o objeto não seja válido, retorna status de erro
+     * emite ao frontend o post deletado, atualizando o feed
      */
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(403).json({ error: 'bad request' });
-    }
-    const user = await User.findOne({
-      where: {
-        email: req.body.email,
-      },
-    });
-
-    if (!user) {
-      return res.status(400).json({ error: 'User not found' });
-    }
-
-    if (!(await user.checkPassword(req.body.password))) {
-      return res.status(401).json({ error: 'Password invalid ' });
-    }
-
-    const { id, name, email } = user;
-    return res.status(200).json({
-      id,
-      name,
-      email,
-    });
+    req.io.emit('delete', req.headers.id);
+    return res.status(200).json({ ok: 'ok' });
   }
 }
-
-export default new UserController();
+export default new PostController();
 </code></pre>
   </article>
 </section>

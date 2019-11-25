@@ -1,5 +1,7 @@
 require('dotenv/config');
-
+/**
+ * Configuração da aplicação
+ */
 module.exports = {
   dialect: process.env.DB_DIALECT,
   host: process.env.PG_HOST,

@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+/**
+ * Schema de Post modelado para o MongoDB
+ */
 const PostSchema = new mongoose.Schema(
   {
     author: {

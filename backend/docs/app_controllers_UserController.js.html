@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      UserController.js - Documentation
+      app/controllers/UserController.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -75,13 +75,13 @@
 
     
 
-    
+    <h3>Classes</h3><ul><li id="Avatar-nav"><a href="Avatar.html">Avatar</a></li><li id="Database-nav"><a href="Database.html">Database</a><ul class='methods'><li data-type="method" id="Database-init-nav"><a href="Database.html#init">init</a></li><li data-type="method" id="Database-init-nav"><a href="Database.html#init">init</a></li><li data-type="method" id="Database-mongo-nav"><a href="Database.html#mongo">mongo</a></li><li data-type="method" id="Database-mongo-nav"><a href="Database.html#mongo">mongo</a></li></ul></li><li id="User-nav"><a href="User.html">User</a><ul class='methods'><li data-type="method" id="User-init-nav"><a href="User.html#.init">init</a></li><li data-type="method" id="User-init-nav"><a href="User.html#.init">init</a></li><li data-type="method" id="User-checkPassword-nav"><a href="User.html#checkPassword">checkPassword</a></li><li data-type="method" id="User-checkPassword-nav"><a href="User.html#checkPassword">checkPassword</a></li></ul></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#PostSchema">PostSchema</a></li><li><a href="global.html#server">server</a></li></ul>
   </nav>
 
   <div id="main">
     
       <h1 class="page-title">
-        UserController.js
+        app/controllers/UserController.js
       </h1>
     
 
@@ -178,20 +178,34 @@ class UserController {
     if (!(await schema.isValid(req.body))) {
       return res.status(403).json({ error: 'bad request' });
     }
+
+    /**
+     * Busca pelo usuário já validado
+     */
     const user = await User.findOne({
       where: {
         email: req.body.email,
       },
     });
 
+    /**
+     * Caso o usuário não seja encontrado, retorna erro
+     */
     if (!user) {
       return res.status(400).json({ error: 'User not found' });
     }
+
+    /**
+     * Verifica se a senha do usuário está correta e encriptada
+     */
 
     if (!(await user.checkPassword(req.body.password))) {
       return res.status(401).json({ error: 'Password invalid ' });
     }
 
+    /**
+     * Retorna o usuário para que ele possa ser direcionado ao feed
+     */
     const { id, name, email } = user;
     return res.status(200).json({
       id,

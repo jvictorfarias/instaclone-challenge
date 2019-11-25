@@ -10,19 +10,19 @@ const routes = new Router();
 
 const upload = multer(multerConfig);
 
-// Users
+/** Definição das rodas de usuário */
 routes.post('/registration', UserController.store);
 routes.post('/login', UserController.show);
 
-// Avatar
+/** Definição das rodas de Avatar */
 routes.post('/avatars', upload.single('file'), AvatarController.store);
 
-// Posts
+/** Definição das rotas de Posts */
 routes.post('/posts', upload.single('image'), PostController.store);
 routes.get('/posts', PostController.index);
 routes.delete('/posts', PostController.delete);
 
-// Likes
+/** Definição das rotas de Likes */
 routes.post('/posts/:id/like', LikeController.store);
 
 export default routes;

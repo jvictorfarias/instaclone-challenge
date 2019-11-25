@@ -86,20 +86,34 @@ class UserController {
     if (!(await schema.isValid(req.body))) {
       return res.status(403).json({ error: 'bad request' });
     }
+
+    /**
+     * Busca pelo usuário já validado
+     */
     const user = await User.findOne({
       where: {
         email: req.body.email,
       },
     });
 
+    /**
+     * Caso o usuário não seja encontrado, retorna erro
+     */
     if (!user) {
       return res.status(400).json({ error: 'User not found' });
     }
+
+    /**
+     * Verifica se a senha do usuário está correta e encriptada
+     */
 
     if (!(await user.checkPassword(req.body.password))) {
       return res.status(401).json({ error: 'Password invalid ' });
     }
 
+    /**
+     * Retorna o usuário para que ele possa ser direcionado ao feed
+     */
     const { id, name, email } = user;
     return res.status(200).json({
       id,
