@@ -12,11 +12,16 @@ import Comment from '../../assets/comment.svg';
 import Send from '../../assets/send.svg';
 import Header from '../../components/Header';
 
+/**
+ * Optei pelo novo padrão de "Hooks"
+ */
 export default function Feed() {
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
   const socket = io(config.url);
-
+  /**
+   * useEffect para efeitos colaterais que recarregam os posts do feed
+   */
   useEffect(() => {
     async function loadPosts() {
       const response = await api.get('/posts');
@@ -26,6 +31,9 @@ export default function Feed() {
     loadPosts();
   }, [posts._id]);
 
+  /**
+   * useEffect para ativar o socket IO quando ouver novos posts ou deleção deles
+   */
   useEffect(() => {
     socket.on('post', newPost => {
       setPosts([newPost, ...posts]);
@@ -36,6 +44,9 @@ export default function Feed() {
     });
   }, [posts, socket]);
 
+  /**
+   * Socket de comentário dispara ao lançar um comentário para o servidor
+   */
   async function pushComment() {
     socket.on('comment', newCommentPost => {
       setPosts(
@@ -45,6 +56,10 @@ export default function Feed() {
       );
     });
   }
+
+  /**
+   * Lançamento de like, com atualização no front através do socket
+   */
   async function pushLike() {
     socket.on('like', newLikedPost => {
       setPosts(
@@ -53,6 +68,11 @@ export default function Feed() {
     });
   }
 
+  /**
+   * Função disparada para remover o post
+   * Contém uma janela de confirmação
+   * @param {Number} post._id
+   */
   async function removePost(e) {
     confirmAlert({
       title: 'Deseja excluir o post?',
@@ -74,12 +94,19 @@ export default function Feed() {
       ],
     });
   }
-
+  /**
+   * Função para lidar com os likes
+   * @param {Number} post._id
+   */
   async function handleLike(e) {
     pushLike();
     await api.post(`/posts/${e}/like`);
   }
 
+  /**
+   * Função para lidar com os comentários
+   * @param {Number} post._id
+   */
   async function handleComment(e) {
     pushComment();
     await api.post(`/posts/${e}/comments`, { comments });

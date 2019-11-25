@@ -11,13 +11,24 @@ export default function Login({ history }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  /**
+   * Se o usuário não tiver registro, redireciona para a rota de cadastro
+   */
   async function handleCadastro() {
     history.push('/registration');
   }
 
+  /**
+   * Função que lida com o login de usuário
+   * podendo retornar status de erro ou sucesso
+   *
+   * @param {User} e
+   */
   async function handleSubmit(e) {
     e.preventDefault();
-
+    /**
+     * Promises que retornam o componente de notificação de erro ou sucesso
+     */
     api
       .post('login', { email, password })
       .then(async response => {

@@ -6,6 +6,9 @@ import Post from './pages/Post/Post';
 import Login from './pages/Login/Login';
 import Registration from './pages/Registration/Registration';
 
+/**
+ * Rotas da aplicação React
+ */
 function Routes() {
   return (
     <Switch>

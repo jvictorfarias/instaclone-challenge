@@ -14,7 +14,9 @@ export default function Registration({ history }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    /**
+     * Promises que retornam o componente de notificação de erro ou sucesso
+     */
     api
       .post('registration', { name, email, password })
       .then(response => {

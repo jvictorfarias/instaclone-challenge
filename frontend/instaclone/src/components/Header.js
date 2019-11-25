@@ -5,7 +5,9 @@ import './Header.css';
 
 import Logo from '../assets/logo.svg';
 import Camera from '../assets/camera.svg';
-
+/**
+ * Header do app, que contém a logo e o botão de post
+ */
 export default function Header() {
   return (
     <header id="main-header">
