@@ -42,6 +42,8 @@ O Feed possui a característica de conter todos os posts, que além de serem vis
 http://localhost:3000/feed
 ```
 
+![feed](https://github.com/jvictorfarias/instaclone-challenge/blob/master/img/feed.png)
+
 ### Post
 
 Área de criação de post, onde ocorre a verificação de campos preenchidos, além do formato de imagem.
@@ -49,3 +51,5 @@ http://localhost:3000/feed
 ```
 http://localhost:3000/post
 ```
+
+![post](https://github.com/jvictorfarias/instaclone-challenge/blob/master/img/post.png)
