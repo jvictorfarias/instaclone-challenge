@@ -5,7 +5,8 @@
   "author": "Joao Victor Farias",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "start": "sucrase-node src/server.js"
   },
   "devDependencies": {
     "eslint": "^6.7.0",
