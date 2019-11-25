@@ -66,6 +66,13 @@ section#post-list article footer p span {
   color: cornflowerblue;
   display: block;
 }
+section#post-list button {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+}
 
 section#comment {
   font: inherit;

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import { confirmAlert } from 'react-confirm-alert';
 import config from '../../config/config';
 import api from '../../services/api';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import './Feed.css';
 
 import more from '../../assets/more.svg';
@@ -27,19 +29,45 @@ export default function Feed({ history, match, location }) {
     socket.on('post', newPost => {
       setPosts([newPost, ...posts]);
     });
+
+    socket.on('delete', id => {
+      setPosts(posts.filter(post => post._id !== id));
+    });
   }, [posts, socket]);
 
   async function pushLike() {
     socket.on('like', newLikedPost => {
       setPosts(
-        posts.map(post => (post._id === newLikedPost._id ? newLikedPost : post)),
+        posts.map(post => (post._id === newLikedPost._id ? newLikedPost : post))
       );
     });
   }
 
+  async function removePost(e) {
+    confirmAlert({
+      title: 'Deseja excluir o post?',
+      message: 'Confirme a ação.',
+      buttons: [
+        {
+          label: 'Sim',
+          onClick: async () => {
+            await api.delete('/posts', {
+              headers: {
+                id: e,
+              },
+            });
+          },
+        },
+        {
+          label: 'Não',
+        },
+      ],
+    });
+  }
+
   async function handleLike(e) {
-    await api.post(`/posts/${e}/like`);
     pushLike();
+    await api.post(`/posts/${e}/like`);
   }
 
   return (
@@ -55,7 +83,9 @@ export default function Feed({ history, match, location }) {
                 <span>{post.author}</span>
                 <span className="place">{post.place}</span>
               </div>
-              <img src={more} alt="Mais" />
+              <button type="button" onClick={() => removePost(post._id)}>
+                <img src={more} alt="delete" />
+              </button>
             </header>
             <img src={`${config.url}/files/${post.image}`} alt="nothing" />
             <footer>

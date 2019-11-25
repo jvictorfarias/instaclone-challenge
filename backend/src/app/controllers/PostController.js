@@ -38,5 +38,12 @@ class PostController {
 
     return res.status(200).json(post);
   }
+
+  async delete(req, res) {
+    await Post.findByIdAndRemove(req.headers.id);
+
+    req.io.emit('delete', req.headers.id);
+    return res.status(200).json({ ok: 'ok' });
+  }
 }
 export default new PostController();
