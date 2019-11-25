@@ -20,7 +20,7 @@ export default function Registration({ history }) {
     api
       .post('registration', { name, email, password })
       .then(response => {
-        history.push(`/feed/${response.data.id}`);
+        history.push('/feed');
       })
       .catch(err => {
         if (err.response.status === 403) {
