@@ -14,7 +14,7 @@ form#new-post input {
   margin-bottom: 10px;
 }
 
-form#new-post input[type="text"] {
+form#new-post input[type='text'] {
   height: 38px;
   border-radius: 4px;
   border: 1px solid #ddd;
@@ -23,12 +23,13 @@ form#new-post input[type="text"] {
 }
 
 form#new-post button {
-  padding: 10px 20px;
-  border-radius: 4px;
+  margin-top: 10px;
   border: 0;
-  background: #666;
-  color: #fff;
-  font-size: 14px;
+  border-radius: 4px;
+  height: 48px;
+  font-size: 16px;
+  background: dodgerblue;
   font-weight: bold;
+  color: #fff;
   cursor: pointer;
 }
