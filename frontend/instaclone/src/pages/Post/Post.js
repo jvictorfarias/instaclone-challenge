@@ -24,7 +24,7 @@ export default function Post({ history }) {
     data.append('hashtags', hashtags);
     data.append('image', image);
 
-    await api.post('posts', data);
+    await api.post('newpost', data);
 
     history.push('/feed');
   }

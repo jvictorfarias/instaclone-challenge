@@ -13,15 +13,7 @@ import Header from '../../components/Header';
 export default function Feed({ history, match, location }) {
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    async function loadPosts() {
-      const response = await api.get('/posts');
-      setPosts(response.data);
-    }
-    loadPosts();
-  }, [posts._id]);
-
-  useEffect(() => {
+  async function instantiateSocket() {
     const socket = io(config.url);
 
     socket.on('post', newPost => {
@@ -29,12 +21,24 @@ export default function Feed({ history, match, location }) {
     });
 
     socket.on('like', newPostLike => {
-      setPosts([newPostLike, ...posts]);
+      setPosts(
+        posts.map(post => (post._id === newPostLike._id ? newPostLike : post))
+      );
     });
-  });
+  }
+
+  useEffect(() => {
+    async function loadPosts() {
+      const response = await api.get('/posts');
+      setPosts(response.data);
+    }
+
+    loadPosts();
+  }, [posts._id]);
 
   async function handleLike(e) {
-    api.post(`/posts/${e}/like`);
+    await api.post(`/posts/${e}/like`);
+    instantiateSocket();
   }
 
   return (
