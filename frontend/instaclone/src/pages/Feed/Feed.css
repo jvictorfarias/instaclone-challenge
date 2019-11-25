@@ -143,7 +143,6 @@ section#comment button {
   text-transform: inherit;
   text-overflow: ellipsis;
   user-select: none;
-  width: auto;
   border: 0;
   display: inline;
   padding: 0;
@@ -155,7 +154,6 @@ section#comment button {
   border-bottom-color: initial;
   border-left-color: initial;
   color: cornflowerblue;
-  pointer-events: none;
 }
 
 section#comment textarea {
@@ -163,6 +161,7 @@ section#comment textarea {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
   line-height: 18px;
+  margin-top: 30px;
   overflow: hidden;
   display: flex;
   -webkit-box-flex: 1;
@@ -183,4 +182,9 @@ section#comment textarea {
   color: #000;
   outline-color: initial;
   height: 17px;
+}
+
+section#comment li {
+  color: #000;
+  margin-top: 3px;
 }

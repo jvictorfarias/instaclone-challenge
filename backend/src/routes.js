@@ -5,6 +5,7 @@ import multerConfig from './config/multer';
 import AvatarController from './app/controllers/AvatarController';
 import PostController from './app/controllers/PostController';
 import LikeController from './app/controllers/LikeController';
+import CommentController from './app/controllers/CommentController';
 
 const routes = new Router();
 
@@ -24,5 +25,8 @@ routes.delete('/posts', PostController.delete);
 
 /** Definição das rotas de Likes */
 routes.post('/posts/:id/like', LikeController.store);
+
+/** Definição das rotas de comentários */
+routes.post('/posts/:id/comments', CommentController.store);
 
 export default routes;

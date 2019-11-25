@@ -12,8 +12,9 @@ import Comment from '../../assets/comment.svg';
 import Send from '../../assets/send.svg';
 import Header from '../../components/Header';
 
-export default function Feed({ history, match, location }) {
+export default function Feed() {
   const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState([]);
   const socket = io(config.url);
 
   useEffect(() => {
@@ -35,10 +36,17 @@ export default function Feed({ history, match, location }) {
     });
   }, [posts, socket]);
 
+  async function pushComment() {
+    socket.on('comment', newCommentPost => {
+      setPosts(
+        posts.map(post => (post._id === newCommentPost._id ? newCommentPost : post),),
+      );
+    });
+  }
   async function pushLike() {
     socket.on('like', newLikedPost => {
       setPosts(
-        posts.map(post => (post._id === newLikedPost._id ? newLikedPost : post))
+        posts.map(post => (post._id === newLikedPost._id ? newLikedPost : post)),
       );
     });
   }
@@ -70,6 +78,10 @@ export default function Feed({ history, match, location }) {
     await api.post(`/posts/${e}/like`);
   }
 
+  async function handleComment(e) {
+    pushComment();
+    await api.post(`/posts/${e}/comments`, { comments });
+  }
   return (
     <div>
       <Header />
@@ -109,14 +121,25 @@ export default function Feed({ history, match, location }) {
             <footer>
               <section id="comment">
                 <div>
+                  <ul>
+                    {post.comments.map((comment, index) => (
+                      <li key={index}>{comment}</li>
+                    ))}
+                  </ul>
                   <form>
                     <textarea
                       aria-label="Adicione um comentário..."
                       placeholder="Adicione um comentário..."
                       autoComplete="off"
                       autoCorrect="off"
+                      onChange={e => setComments(e.target.value)}
                     />
-                    <button type="submit">Publicar</button>
+                    <button
+                      type="button"
+                      onClick={() => handleComment(post._id)}
+                    >
+                      Publicar
+                    </button>
                   </form>
                 </div>
               </section>
