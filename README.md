@@ -32,6 +32,8 @@ Apresentação de funcionalidades e rotas disponíveis da aplicação:
 http://localhost:3000/
 ```
 
+![login](https://github.com/jvictorfarias/instaclone-challenge/img/loginECadastro.png)
+
 ### Feed
 
 O Feed possui a característica de conter todos os posts, que além de serem visualizados, podem ser comentados, curtidos e excluídos ao clicar no botão direito superior.
@@ -43,8 +45,6 @@ http://localhost:3000/feed
 ### Post
 
 Área de criação de post, onde ocorre a verificação de campos preenchidos, além do formato de imagem.
-
-![login](https://imgur.com/RXtSMTF)
 
 ```
 http://localhost:3000/post
