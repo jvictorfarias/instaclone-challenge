@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "sucrase-node src/server.js"
+    "start": "sucrase-node src/server.js",
+    "generate-docs": "jsdoc -r  . -d docs -c jsdoc.json README.md"
   },
   "devDependencies": {
     "eslint": "^6.7.0",
@@ -24,6 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsdoc": "^3.6.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.12",
     "morgan": "^1.9.1",
