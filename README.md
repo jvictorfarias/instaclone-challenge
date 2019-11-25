@@ -19,3 +19,33 @@ yarn, node
 ### Instalando
 
 Dentro de cada pasta (Backend/Frontend) existem instruções de como rodar a aplicação nos seus respectivos ambientes.
+
+### Detalhes da Aplicação
+
+Apresentação de funcionalidades e rotas disponíveis da aplicação:
+
+### Login e Cadastro
+
+Área de login e cadastro com validação de usuário, senha e campos
+
+```
+http://localhost:3000/
+```
+
+### Feed
+
+O Feed possui a característica de conter todos os posts, que além de serem visualizados, podem ser comentados, curtidos e excluídos ao clicar no botão direito superior.
+
+```
+http://localhost:3000/feed
+```
+
+### Post
+
+Área de criação de post, onde ocorre a verificação de campos preenchidos, além do formato de imagem.
+
+![login](https://imgur.com/RXtSMTF)
+
+```
+http://localhost:3000/post
+```
