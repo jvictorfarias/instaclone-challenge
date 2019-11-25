@@ -11,7 +11,7 @@ const models = [User];
  */
 class Database {
   constructor() {
-    this.init();
+    // this.init();
     this.mongo();
   }
 
@@ -29,7 +29,6 @@ class Database {
   mongo() {
     this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
-      useFindAndModify: true,
       useUnifiedTopology: true,
     });
   }

@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
-import User from '../models/User';
+import bcrypt from 'bcrypt';
+import User from '../schemas/User';
 
 class UserController {
   /**
@@ -40,13 +41,17 @@ class UserController {
      * Verifica se já existe algum usuário com esse email
      */
 
-    if (await User.findOne({ where: { email: req.body.email } })) {
+    if (await User.findOne({ email: req.body.email })) {
       return res.status(401).json({ error: 'User already exists' });
     }
 
     /**
      * Cria o usuário
      */
+
+    /** Encripta a senha do usuário  */
+    req.body.password_hash = await bcrypt.hash(req.body.password, 8);
+
     const { id, name, email } = await User.create(req.body);
     return res.json({
       id,
@@ -90,11 +95,7 @@ class UserController {
     /**
      * Busca pelo usuário já validado
      */
-    const user = await User.findOne({
-      where: {
-        email: req.body.email,
-      },
-    });
+    const user = await User.findOne({ email: req.body.email });
 
     /**
      * Caso o usuário não seja encontrado, retorna erro
@@ -107,7 +108,7 @@ class UserController {
      * Verifica se a senha do usuário está correta e encriptada
      */
 
-    if (!(await user.checkPassword(req.body.password))) {
+    if (!(await bcrypt.compare(req.body.password, user.password_hash))) {
       return res.status(401).json({ error: 'Password invalid ' });
     }
 
