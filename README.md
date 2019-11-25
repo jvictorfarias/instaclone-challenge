@@ -32,7 +32,7 @@ Apresentação de funcionalidades e rotas disponíveis da aplicação:
 http://localhost:3000/
 ```
 
-![login](https://github.com/jvictorfarias/instaclone-challenge/img/loginECadastro.png)
+![login](https://github.com/jvictorfarias/instaclone-challenge/blob/master/img/loginECadastro.png)
 
 ### Feed
 
