@@ -63,15 +63,6 @@ class UserController {
       email,
     });
   }
-
-  async index(req, res) {
-    const { name, email } = await User.findByPk(req.params.id);
-
-    return res.status(200).json({
-      name,
-      email,
-    });
-  }
 }
 
 export default new UserController();

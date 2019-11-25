@@ -11,7 +11,6 @@ const routes = new Router();
 const upload = multer(multerConfig);
 
 // Users
-routes.get('/users/:id', UserController.index);
 routes.post('/registration', UserController.store);
 routes.post('/login', UserController.show);
 

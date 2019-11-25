@@ -12,20 +12,7 @@ import Header from '../../components/Header';
 
 export default function Feed({ history, match, location }) {
   const [posts, setPosts] = useState([]);
-
-  async function instantiateSocket() {
-    const socket = io(config.url);
-
-    socket.on('post', newPost => {
-      setPosts([newPost, ...posts]);
-    });
-
-    socket.on('like', newPostLike => {
-      setPosts(
-        posts.map(post => (post._id === newPostLike._id ? newPostLike : post))
-      );
-    });
-  }
+  const socket = io(config.url);
 
   useEffect(() => {
     async function loadPosts() {
@@ -36,9 +23,23 @@ export default function Feed({ history, match, location }) {
     loadPosts();
   }, [posts._id]);
 
+  useEffect(() => {
+    socket.on('post', newPost => {
+      setPosts([newPost, ...posts]);
+    });
+  }, [posts, socket]);
+
+  async function pushLike() {
+    socket.on('like', newLikedPost => {
+      setPosts(
+        posts.map(post => (post._id === newLikedPost._id ? newLikedPost : post)),
+      );
+    });
+  }
+
   async function handleLike(e) {
     await api.post(`/posts/${e}/like`);
-    instantiateSocket();
+    pushLike();
   }
 
   return (

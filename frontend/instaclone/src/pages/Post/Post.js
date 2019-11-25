@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 import api from '../../services/api';
 
 import './Post.css';
+import 'animate.css';
 import Header from '../../components/Header';
 
 export default function Post({ history }) {
@@ -24,9 +26,52 @@ export default function Post({ history }) {
     data.append('hashtags', hashtags);
     data.append('image', image);
 
-    await api.post('newpost', data);
-
-    history.push('/feed');
+    api
+      .post('posts', data)
+      .then(() => {
+        store.addNotification({
+          title: 'Sucesso',
+          message: 'Post Criado',
+          type: 'success',
+          container: 'bottom-center',
+          animationIn: ['animated', 'fadeIn'],
+          animationOut: ['animated', 'fadeOut'],
+          width: 400,
+          dismiss: {
+            duration: 3000,
+          },
+        });
+        history.push('/feed');
+      })
+      .catch(err => {
+        if (err.response.status === 400) {
+          store.addNotification({
+            title: 'Erro!',
+            message: 'Faltam dados a serem preenchidos.',
+            type: 'danger',
+            container: 'bottom-center',
+            animationIn: ['animated', 'fadeIn'],
+            animationOut: ['animated', 'fadeOut'],
+            width: 400,
+            dismiss: {
+              duration: 3000,
+            },
+          });
+        } else if (err.response.status === 403) {
+          store.addNotification({
+            title: 'Erro!',
+            message: 'Formato inválido de imagem.',
+            type: 'danger',
+            container: 'bottom-center',
+            animationIn: ['animated', 'fadeIn'],
+            animationOut: ['animated', 'fadeOut'],
+            width: 400,
+            dismiss: {
+              duration: 3000,
+            },
+          });
+        }
+      });
   }
 
   async function handleImageChange(e) {

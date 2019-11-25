@@ -15,8 +15,10 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: ['react', 'react-hooks'],
   rules: {
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     'eslint-disable-next-line react/jsx-filename-extension': 'off',
     'react/jsx-filename-extension': 'off',
     'arrow-parens': 'off',

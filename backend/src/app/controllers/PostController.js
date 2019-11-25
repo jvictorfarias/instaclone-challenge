@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import Post from '../schemas/Post';
 
 class PostController {
@@ -8,8 +9,22 @@ class PostController {
   }
 
   async store(req, res) {
+    const schema = Yup.object().shape({
+      author: Yup.string().required(),
+      place: Yup.string().required(),
+      description: Yup.string().required(),
+      hashtags: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.body)) || !req.file) {
+      return res.status(400).json({ error: 'Data validation failed' });
+    }
     const { author, place, description, hashtags } = req.body;
-    const { filename: image } = req.file;
+    const { filename: image, mimetype: type } = req.file;
+
+    if (type !== 'image/jpeg' && type !== 'image/png') {
+      return res.status(403).json({ error: 'Image validation failed' });
+    }
 
     const post = await Post.create({
       author,
