@@ -29,7 +29,6 @@ class UserController {
         .required(),
     });
 
-    req.body.password_hash = req.body.password;
     /**
      * Caso seja inválido, retorna status de erro
      */
@@ -51,7 +50,7 @@ class UserController {
      */
 
     /** Encripta a senha do usuário  */
-    // req.body.password_hash = await bcrypt.hash(req.body.password, 8);
+    req.body.password_hash = await bcrypt.hash(req.body.password, 8);
 
     const { id, name, email } = await User.create(req.body);
     return res.json({
@@ -109,12 +108,9 @@ class UserController {
      * Verifica se a senha do usuário está correta e encriptada
      */
 
-    /** Para */
-
-    if (req.body.password !== user.password_hash) {
-      return res.status(401).json({ error: 'Password invalid' });
+    if (!(await bcrypt.compare(req.body.password, user.password_hash))) {
+      return res.status(401).json({ error: 'Wrong password' });
     }
-
     /**
      * Retorna o usuário para que ele possa ser direcionado ao feed
      */

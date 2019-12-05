@@ -3,15 +3,16 @@ import mongoose from 'mongoose';
 import databaseConfig from '../config/database';
 
 import User from '../app/models/User';
+import PostPG from '../app/models/Post';
 
-const models = [User];
+const models = [User, PostPG];
 
 /**
  * Classe de inicialização dos bancos de dados
  */
 class Database {
   constructor() {
-    // this.init();
+    this.init();
     this.mongo();
   }
 
