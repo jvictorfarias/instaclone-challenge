@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import Post from '../schemas/Post';
+import PostPG from '../models/Post';
 
 class PostController {
   /**
@@ -60,6 +61,19 @@ class PostController {
     /**
      * Cria o post e emite para o socket no frontend
      */
+
+    try {
+      const postgresStore = await PostPG.create({
+        author,
+        place,
+        description,
+        image,
+        hashtags,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+
     const post = await Post.create({
       author,
       place,
